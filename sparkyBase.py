@@ -4,6 +4,9 @@ import math
 import random
 import time
 import csv
+import random
+from os import listdir
+from os.path import isfile, join
 from googletrans import Translator
 
 
@@ -26,7 +29,7 @@ def listenSpeech():
 
 def speakSpeech(text):
     with sr.Microphone() as source:     # mention source it will be either Microphone or audio files.
-        engine.say("You said : {}".format(text))
+        engine.say(text)
         engine.runAndWait()
 
 def translateSpeech():
@@ -113,7 +116,15 @@ def tellJoke():
     time.sleep(.5)
     speakSpeech(line[i])
 
-            
+def tellStory():
+    storyPath = r"data/story"
+    files = [f for f in listdir(storyPath) if isfile(join(storyPath, f))]
+    fIndex = math.floor(len(files) * random.random())
+    f = open(storyPath + "\\" + files[fIndex], "r")
+    text = f.read()
+
+    f.close()
+    speakSpeech(text)
 
 
 
@@ -122,3 +133,7 @@ text = listenSpeech()
 speakSpeech(text)
 if (text.lower() == "translate"):
     translate = translateSpeech()
+if (text.lower() == "joke"):
+    tellJoke()
+if (text.lower() == "story"):
+    tellStory()
