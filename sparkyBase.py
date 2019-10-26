@@ -131,9 +131,9 @@ def tellStory():
 
 text = listenSpeech()
 speakSpeech(text)
-if (text.lower() == "translate"):
+if (text.lower().find("translate") != -1):
     translate = translateSpeech()
-if (text.lower() == "joke"):
+if (text.lower().find("joke") != -1):
     tellJoke()
-if (text.lower() == "story"):
+if (text.lower().find("story") != -1):
     tellStory()
